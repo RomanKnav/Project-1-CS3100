@@ -22,10 +22,14 @@ def read_csv_file(filepath):
             # for col in row:
             for col in row[1:]:
                 megadict[country_name].append(col)
+                megalist.append(col)
 
-        for keys, values in megadict.items():
-            print(keys)
-            print(values)
+        # for keys, values in megadict.items():
+        #     print(keys)
+        #     print(values)
+
+        print(megalist)
+        return megalist
 
 
 read_csv_file('kaggle files/archive/countries-table.csv')
