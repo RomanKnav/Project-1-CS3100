@@ -46,7 +46,8 @@ def read_olympic_file(olympicData):
     with open(olympicData) as file2:
         csvReader2 = csv.reader(file2, delimiter=',', quotechar='|')
 
-""" countries key:    
+""" countries dict keys:   
+    0: world ranking by pop
     1: land area
     5: growth rate
     6: world percentage
@@ -56,32 +57,46 @@ def read_olympic_file(olympicData):
 
     olympics key:
 """ 
+
+medals = ["Gold", "Silver", "Bronze"]
 countrydata = read_country_file('kaggle files/data/countries-table.csv')
 
 # should be able to accept BOTH country and olympic queries:
 while True:
     print("input country:")
-    country = input.lower()
+    country = input()
 
     query = None
 
     if country in countrydata.keys():
+        string = """
+        Key Insights on %s:\n
+        land area: %skm\n
+        growth rate: %s\n
+        world percentage: %s\n
+        population 2023: %s\n
+        """  % (country, 
+                countrydata[country][1], 
+                countrydata[country][5],
+                countrydata[country][7],
+                countrydata[country][14])
+        
+        print(string)
 
         # we have a valid country:
         print("input query:")
         query = input.lower()
 
-        # we should also print a neat list of interesting facts of the country before query:
-
-
         # check if query is a country, medal type, or sport:
-        if query in countrydata.keys() or query in 
+        # looks like I'll have to make lists for medals and sports
+
+        #if query in countrydata.keys() or query in 
 
 
     else:
         print("Country not found!")
         continue
 
-    if query in countrydata.keys():
-        # query is a country
-        if country
+    # if query in countrydata.keys():
+    #     # query is a country
+    #     if country
