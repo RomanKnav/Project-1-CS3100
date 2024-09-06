@@ -7,40 +7,39 @@ import math
 # "Gold", "Silver", "Bronze"
 medals = ["gold medals", "silver medals", "bronze medals"]
 
-# this works:
 # returns a list of a given country's stats:
 def countryStats(country):
-        stats = []
+    stats = []
 
-        with open('kaggle files/data/countries-table.csv') as file1:
-            csvReader = csv.reader(file1, delimiter=',', quotechar='|')
-        
-            # loop through rows and check item 1:
-            for row in csvReader:
+    with open('kaggle files/data/countries-table.csv') as file1:
+        csvReader = csv.reader(file1, delimiter=',', quotechar='|')
+    
+        # loop through rows and check item 1:
+        for row in csvReader:
 
-                if country == row[0]:
+            if country == row[0]:
 
-                    for col in row:
-                        stats.append(col)
+                for col in row:
+                    stats.append(col)
 
-                    return stats
+                return stats
 
-            print("not a valid country!")
+        print("not a valid country!")
 
-# this works:
+# returns list of country names:
 def allCountries():
     with open('kaggle files/data/countries-table.csv') as file1:
         csvReader = csv.reader(file1, delimiter=',', quotechar='|')
 
         countries = []
         for row in csvReader:
-            # add country names to countries
             countries.append(row[0])
         
         return countries
-    
+
+# work in progress:
+# get country's total number of "x" medals    
 def getMedals(country, medal):
-    # by this point, medal is fully formatted.
 
     with open('kaggle files/data/countries-table.csv') as file1:
         csvReader = csv.reader(file1, delimiter=',', quotechar='|')
@@ -64,6 +63,7 @@ def getMedals(country, medal):
             case "Bronze":
                 medalIndex = 5
 
+        # every time country name appears, add the number of medals to xMedals:
         for row in csvReader:
             if (row[2] == country):
                 xMedals += row[medalIndex]
@@ -88,6 +88,7 @@ def getMedals(country, medal):
     medals, athletics
 """
 
+# input loop:
 def loop():
     while True:
         print("input country:")
@@ -128,19 +129,21 @@ def loop():
 
             ##################SECOND INPUT#####################
 
-            # we have a country (if statement works):
+            # we have a country:
             if query in allCountries() and query != country1:
                 country2 = countryStats(query)
 
                 country2Size = country2[3]
 
-                # these are LISTS:
+                # these become LISTS:
                 biggerCountry = None
                 smallerCountry = None
 
-                # these should ALSO be lists:
+                # these become INTS:
                 biggerCountryPop = None
                 smallerCountryPop = None
+
+                # strings:
                 biggerCountryPopName = None
                 smallerCountryPopName = None
 
@@ -160,7 +163,6 @@ def loop():
                     smallerCountryPop = int(smallerCountry[16])
                     print(biggerCountryPopName, "has a bigger population than", smallerCountryPopName)
                 else:
-                    # THIS keeps running:
                     biggerCountryPopName = smallerCountry[0]
                     smallerCountryPopName = biggerCountry[0]
                     biggerCountryPop = int(smallerCountry[16])
@@ -175,6 +177,7 @@ def loop():
                                         )
 
                 if (size_quotient == 1):
+                    # THIS IS NOT 100% (prints: "You can fit 0 Indias in Georgia")
                     print("\nYou can fit %s %s in %s" % (size_quotient, smallerCountry[0], biggerCountry[0]))
                 else:
                     print("\nYou can fit %s %ss in %s" % (size_quotient, smallerCountry[0], biggerCountry[0]))
