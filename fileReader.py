@@ -1,5 +1,4 @@
 import csv
-from collections import defaultdict
 
 # countries: 'kaggle files/countries-table.csv'
 # olympics:  'kaggle files/Olympics 2024.csv'
