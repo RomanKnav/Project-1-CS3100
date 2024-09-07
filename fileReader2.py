@@ -195,4 +195,4 @@ def loop():
             # for first country:
             print("country not found in our advanced extensive database!")
 
-loop()
+#loop() # need fileReader2.py to execute from elsewhere (main.py or UI.py). this file needs to be used as a library
