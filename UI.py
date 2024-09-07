@@ -62,7 +62,6 @@ def main(stdscr):
         elif key == curses.KEY_DOWN and current_row_idx < len(menuOptions[current_page.value])-1:
             current_row_idx += 1
         elif key == curses.KEY_ENTER or key in [10,13]:
-            current_row_idx = 0
             # Menu Option Code
             if menuOptions[current_page.value][current_row_idx] == 'Fact Generator':
                 curses.endwin()  
@@ -73,6 +72,7 @@ def main(stdscr):
             else:
                 current_page = Page(current_row_idx+1)
                 stdscr.refresh()
+            current_row_idx = 0
         elif key == curses.KEY_BACKSPACE or key == 127 or key == 8:
             current_page = Page.MAIN
 
