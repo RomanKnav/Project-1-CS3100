@@ -12,8 +12,14 @@ menuOptions = [ ['Tools', 'Features', 'About', 'Exit'],
 
 Page = Enum('Page',{'MAIN':0,'TOOLS':1,'FEATURES':2,'ABOUT':3})
 
-footerInfo = ['Use the Up and Down arrow keys to navigate. Press Enter to select an option. Press BACKSPACE to return to main menu.']
-
+footerInfo = ['Use the UP and DOWN arrow keys to navigate. Press ENTER to select an option. Press BACKSPACE to return to main menu.']
+toolTips = [['Print and Edit a CSV file.',
+            'Play around with data-related programs.',
+            'Credits, README',
+            'Quits program and returns to terminal'],
+            [],
+            ['Enter two countries to generate a page of comparisons.',
+             'Generate a visual histogram of country data.']]
 
 def display_menu(stdscr, column, selected_row_idx, pageNo):
     
@@ -41,9 +47,15 @@ def display_menu(stdscr, column, selected_row_idx, pageNo):
             stdscr.attron(curses.color_pair(1))
             stdscr.addstr(y,x,row)
             stdscr.attroff(curses.color_pair(1))
+
+            #Tooltips
+            if (pageNo < len(toolTips)):
+                if (selected_row_idx < len(toolTips[pageNo])):
+                    stdscr.addstr(y,x+len(row),f"{"-"*(width//8)}{toolTips[pageNo][selected_row_idx]}")
         else:
             stdscr.addstr(y,x,row)
 
+    stdscr.addstr(height-2,0,f"{"_"*width}")
     stdscr.addstr(height-1,0,footerInfo[0])
     stdscr.refresh()
 
