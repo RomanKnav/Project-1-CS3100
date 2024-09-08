@@ -10,7 +10,7 @@ medals = ["gold medals", "silver medals", "bronze medals"]
 # updates a country's stats based on the given file
 def update_country_stats(update_filepath):
     with open(update_filepath,'r') as newfile:
-        update_data = newfile.readline().strip().split(',')
+        update_data = newfile.readline().split(',')
 
         # keeping country name to use as a search key for old row to be deleted
         update_country_name = update_data[0]
@@ -24,7 +24,7 @@ def update_country_stats(update_filepath):
         country_found = False
 
         for line in lines:
-            row = line.strip().split(',')
+            row = line.split(',')
             if row[0]== update_country_name:
                 updated_cols.append(f"{update_country_name},{','.join(update_stats)}")
                 country_found = True
@@ -36,7 +36,7 @@ def update_country_stats(update_filepath):
 
     with open('kaggle files/data/countries-table.csv', "w") as mainfile:
         mainfile.writelines(updated_cols)
-        print(f"File updated\n")
+#        print(f"File updated\n")
         
 # returns a list of a given country's stats:
 def countryStats(country):
