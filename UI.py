@@ -6,7 +6,7 @@ from enum import Enum
 
 
 menuOptions = [ ['Tools', 'Features', 'About', 'Exit'],
-                ['Update Row', 'Add New Row', 'Delete Row'],
+                ['Update Row', 'Add New Row', 'Delete Row', 'Display Data Table', 'Build Table', 'Search'],
                 ['Fact Generator', 'Histogram'],
                 ['Created by Roman, Morgan, and Kyle for CS3100'] ]
 
@@ -74,7 +74,7 @@ def main(stdscr):
         elif key == curses.KEY_DOWN and current_row_idx < len(menuOptions[current_page.value])-1:
             current_row_idx += 1
         elif key == curses.KEY_ENTER or key in [10,13]:
-            # Menu Option Code
+            # MENU CODE: Place Menu Functions here.
             if menuOptions[current_page.value][current_row_idx] == 'Fact Generator':
                 curses.endwin()  
                 fileReader2.loop()
