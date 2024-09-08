@@ -80,8 +80,6 @@ def getMedals(country, medal):
     16: population 2023
     17: pop 2030
     18: pop 2050
-
-    olympics key:
 """ 
 
 """"Queries:
