@@ -51,7 +51,7 @@ def display_menu(stdscr, column, selected_row_idx, pageNo):
             #Tooltips
             if (pageNo < len(toolTips)):
                 if (selected_row_idx < len(toolTips[pageNo])):
-                    stdscr.addstr(y,x+len(row),f"{"-"*(width//8)}{toolTips[pageNo][selected_row_idx]}")
+                    stdscr.addstr(y,x+len(row),f"{" "*(width//8)}{toolTips[pageNo][selected_row_idx]}")
         else:
             stdscr.addstr(y,x,row)
 

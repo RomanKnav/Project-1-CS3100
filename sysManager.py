@@ -13,6 +13,12 @@ class SystemManager:
         except subprocess.CalledProcessError:
             print(f"Failed to install {package_name}. Please install it manually.")
 
+    def install_system_package_macOS(self, package_name):
+        try:
+            subprocess.check_call(["brew", "install", package_name])
+        except subprocess.CalledProcessError:
+            print(f"Failed to install {package_name}. Please install it manually.")
+
     def check_and_install_curses(self):
         # Check for the platform and install the necessary package
         system = platform.system()
@@ -31,7 +37,7 @@ class SystemManager:
                 print("Installing python3-curses for Linux...")
                 self.install_system_package('python3-curses')
 
-        elif system == "Darwin": # macOS
+        elif system == "Sonoma": # macOS
             try:
                 import curses
             except ImportError:
