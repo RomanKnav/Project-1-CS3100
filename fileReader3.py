@@ -134,6 +134,7 @@ def loop():
             country1Size = country1[sizeIndex]
             country1Pop = country1[popIndex]
 
+            # how "{:,}".format() works: "," ensures that the thousands (every 3 numbers) are seperated by commas. 
             string = """
             Key Insights on %s:\n
             land area: %skm (%s miles)\n
@@ -143,16 +144,16 @@ def loop():
             """  % (# country name
                     country,  
                     # size in km                      
-                    country1Size, 
+                    "{:,}".format(int(country1Size)), 
                     # size in miles     
-                    format(float(country1Size) / 1.609344, ".2f"),
+                    "{:,}".format(float(format(float(country1Size) / 1.609344, ".2f"))),
                     # annual growth rate
                     float(country1[growthIndex]), 
                     country,
                     # world population percentage
                     format(float(country1[percentIndex]), ".2f"),
                     #population in 2023
-                    country1Pop)
+                    "{:,}".format(int(country1Pop)))
             
             print(string)
 
@@ -245,7 +246,7 @@ def loop():
 
                     print("\n" + medalSummary(country, keyWord))
 
-                    print("For every %s medal, there are %s people living in %s" % (totalOrNot, medalsToPeople, country))
+                    print("For every %s medal, there are %s people living in %s" % (totalOrNot, "{:,}".format(medalsToPeople), country))
                 else:
                     print("%s has no %s medals" % (country, keyWord))
         else:
