@@ -9,8 +9,8 @@ sizeIndex = 13
 growthIndex = 15
 percentIndex = 16
 
-# "Gold", "Silver", "Bronze"
-medals = ["gold medals", "silver medals", "bronze medals"]
+# "Gold", "Silver", "Bronze", "Total"
+medals = ["gold medals", "silver medals", "bronze medals", "total medals"]
 
 ################################################################################
 
@@ -46,6 +46,7 @@ def allCountries():
         
         return countries
 
+# retuns index of given medal type (3, 4, 5, or 6)
 def getMedalIndex(medal):
     medalIndex = None
 
@@ -56,10 +57,13 @@ def getMedalIndex(medal):
             medalIndex = 4
         case "Bronze":
             medalIndex = 5
+        case "Total":
+            medalIndex = 6
 
     return medalIndex
 
 # now time for work on olympics file:
+# returns medal count of X type
 def getMedals(country, medal):
 
     medalIndex = getMedalIndex(medal)
@@ -72,19 +76,8 @@ def getMedals(country, medal):
     total: 6
     """
 
-    # determines index to search for specified medal
-    # medalIndex = None
-
     # # medal of any type:
     xMedals = 0
-
-    # match medal:
-    #     case "Gold":
-    #         medalIndex = 3
-    #     case "Silver":
-    #         medalIndex = 4
-    #     case "Bronze":
-    #         medalIndex = 5
 
     # every time country name appears, add the number of medals to xMedals:
     for row in olympicsData:
@@ -94,32 +87,44 @@ def getMedals(country, medal):
 
     return xMedals
 
+# this is a summary for a SINGLE medal type:
 def medalSummary(country, medal):
+
+    # only strings:
     sportAndMedals = []
 
-    medalIndex = None
-    match medal:
-        case "Gold":
-            medalIndex = 3
-        case "Silver":
-            medalIndex = 4
-        case "Bronze":
-            medalIndex = 5
+    medalIndex = getMedalIndex(medal)
 
     # medal count of a certain type:
     medalCount = getMedals(country, medal)
-    for row in olympicsData:
-        sportName = row[0]
 
-        if (row[2] == "\xa0" + country):
-            sportAndMedals.append(sportName)
-            sportAndMedals.append
+    summary = """"""
 
+    if (medalCount > 0): 
+        for row in olympicsData:
+            sportName = row[0]
+
+            if (row[2] == "\xa0" + country):
+                rowMedalCount = row[medalIndex]
+
+                if (int(rowMedalCount) > 0):
+                    sportAndMedals.append(sportName)
+                    sportAndMedals.append(rowMedalCount)
+
+
+
+        for i in range(1, len(sportAndMedals), 2):
+            summary += "\t\t%s, %s \n\n" % (sportAndMedals[i - 1], sportAndMedals[i])
+            
+    # return sportAndMedals
+    return summary
+
+# print(medalSummary("Canada", "Gold"))
 
 # MAIN LOOP:
 def loop():
     while True:
-        print("input country:")
+        print("\ninput country:")
         country = input()
 
         query = None
@@ -152,7 +157,7 @@ def loop():
             print(string)
 
             # we have a valid country:
-            print("input query:\n")
+            print("input query:")
             query = input()
 
             ##################SECOND INPUT#####################
@@ -175,9 +180,7 @@ def loop():
                 biggerCountryPopName = None
                 smallerCountryPopName = None
 
-                print(country1[nameIndex], country1[sizeIndex])
-                print(country2[nameIndex], country2[sizeIndex])
-
+                # if first country's size (km) is bigger than small country's size:
                 if (int(country1Size) > int(country2Size)):
                     biggerCountry = country1
                     smallerCountry = country2
@@ -185,14 +188,13 @@ def loop():
                     biggerCountry = country2
                     smallerCountry = country1
 
+                # if the bigger country has a larger POPULATION:
                 if (int(biggerCountry[popIndex]) > int(smallerCountry[popIndex])):
                     biggerCountryPopName = biggerCountry[nameIndex]
                     smallerCountryPopName = smallerCountry[nameIndex]
                     biggerCountryPop = int(biggerCountry[popIndex])
                     smallerCountryPop = int(smallerCountry[popIndex])
-                    print(biggerCountryPopName, "has a bigger population than", smallerCountryPopName)
                 else:
-                    # this keeps running for India and Austria
                     biggerCountryPopName = smallerCountry[nameIndex]
                     smallerCountryPopName = biggerCountry[nameIndex]
                     biggerCountryPop = int(smallerCountry[popIndex])
@@ -222,17 +224,32 @@ def loop():
 
                 medalsCount = getMedals(country, keyWord)
 
-                pluralOrNot = "medal" if getMedals(country, keyWord) == 1 else "medals"
+                medalsPluralOrNot = "medal:" if getMedals(country, keyWord) == 1 else "medals:"
+
+                medalsToPeople = None
+
+                # if medalsCount equals, set medalsToPeople to regular population:
+                try:
+                    medalsToPeople = math.floor(int(country1Pop) / medalsCount)
+                except ZeroDivisionError:
+                    medalsToPeople = country1Pop
+
+                # we don't want to say "for every Total medal":
+                totalOrNot = '' if keyWord == "Total" else keyWord
 
                 # country is the original input:
-                # print("\nthis country possess", str(getMedals(country, keyWord)), keyWord, "medals\n")
-                print("\n" + country, "possesses", str(getMedals(country, keyWord)), keyWord, pluralOrNot)
+                print("\n*************2024 Olympics:*************")
 
-                # getMedals(country, keyWord)
+                if getMedals(country, keyWord) > 0: 
+                    print("\n" + country, "possesses", str(getMedals(country, keyWord)), keyWord, medalsPluralOrNot)
 
+                    print("\n" + medalSummary(country, keyWord))
 
+                    print("For every %s medal, there are %s people living in %s" % (totalOrNot, medalsToPeople, country))
+                else:
+                    print("%s has no %s medals" % (country, keyWord))
         else:
             # for first country:
-            print("country not found in our advanced extensive database!")
+            print("\ncountry not found in our advanced extensive database!")
 
 loop()
