@@ -1,7 +1,7 @@
 import csv
 import math
 
-######################## global variables ################################
+########## global variables and genPurposeReader function/objects ###############
 
 nameIndex = 2
 popIndex = 5
@@ -9,11 +9,10 @@ sizeIndex = 13
 growthIndex = 15
 percentIndex = 16
 
-# "Gold", "Silver", "Bronze", "Total"
+# "Gold", "Silver", "Bronze", "Total" -these are valid medal strings to input for query:
 medals = ["gold medals", "silver medals", "bronze medals", "total medals"]
 
-################################################################################
-
+# reads a given csv file and returns it as a list of lists (1 row = 1 sublist):
 def genPurposeReader(path):
     with open(path) as file:
         readCSV = csv.reader(file, delimiter=',', quotechar='"')
@@ -22,11 +21,13 @@ def genPurposeReader(path):
 countriesData = genPurposeReader('kaggle files/data/world_population.csv')
 olympicsData = genPurposeReader('kaggle files/data/Olympics 2024.csv')
 
+########################## functions ######################################################
+
 # returns a list of a given country's stats:
 def countryStats(country):
     stats = []
     
-    # loop through rows and check item 1:
+    # loop through rows and check item at nameIndex:
     for row in countriesData:
 
         # check every single row for the given country name
@@ -46,7 +47,7 @@ def allCountries():
         
         return countries
 
-# retuns index of given medal type (3, 4, 5, or 6)
+# returns index of given medal type (3, 4, 5, or 6)
 def getMedalIndex(medal):
     medalIndex = None
 
