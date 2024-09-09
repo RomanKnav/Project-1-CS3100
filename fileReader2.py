@@ -127,6 +127,7 @@ def loop():
         print("\ninput country:")
         country = input()
 
+        # for second input, assigned on 168:
         query = None
 
         if country in allCountries():
@@ -134,7 +135,9 @@ def loop():
             country1Size = country1[sizeIndex]
             country1Pop = country1[popIndex]
 
-            # how "{:,}".format() works: "," ensures that the thousands (every 3 numbers) are seperated by commas. 
+            # how "{:,}".format() works: 
+            # {} is where formatting stuff goes into
+            # "," ensures that the thousands (every 3 numbers) are seperated by commas. 
             string = """
             Key Insights on %s:\n
             land area: %skm (%s miles)\n
@@ -229,7 +232,7 @@ def loop():
 
                 medalsToPeople = None
 
-                # if medalsCount equals, set medalsToPeople to regular population:
+                # if medalsCount equals 0, set medalsToPeople to regular population:
                 try:
                     medalsToPeople = math.floor(int(country1Pop) / medalsCount)
                 except ZeroDivisionError:
