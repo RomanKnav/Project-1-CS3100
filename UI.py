@@ -57,7 +57,8 @@ def display_menu(stdscr, column, selected_row_idx, pageNo):
         else:
             stdscr.addstr(y,x,row)
 
-    stdscr.addstr(height-2,0,f"{"_"*width}")
+    _border = "_"*width
+    stdscr.addstr(height-2,0,f"{_border}")
     stdscr.addstr(height-1,0,footerInfo[0])
     stdscr.refresh()
 
