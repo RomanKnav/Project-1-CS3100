@@ -37,7 +37,7 @@ class SystemManager:
                 print("Installing python3-curses for Linux...")
                 self.install_system_package('python3-curses')
 
-        elif system == "Sonoma": # macOS
+        elif system == "Darwin": # macOS
             try:
                 import curses
             except ImportError:
